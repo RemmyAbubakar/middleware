@@ -1,4 +1,5 @@
 const router = require("express").Router;
+const { pathMiddleware } = require("../middlewares/pathMiddleware")
 
 const {
   createUser,
@@ -10,8 +11,13 @@ const {
 
 const userRouter = router();
 
-userRouter.route("/").get(getUsers).post(createUser);
-userRouter.route("/:userId").get(getUser).patch(updateUser).delete(deleteUser);
+
+userRouter.route("/").get(pathMiddleware, getUsers).post(createUser);
+userRouter
+  .route("/:userId")
+  .get(getUser)
+  .patch(updateUser)
+  .delete(deleteUser);
 
 // userRouter.get("/", getUser)
 // userRouter.create("/", createUser)
